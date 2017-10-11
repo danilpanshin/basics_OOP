@@ -5,16 +5,16 @@ class Station
     @trains = []
   end
 
-  def arrival_train(type)
-    @trains << type
+  def arrival_train(train)
+    @trains << train
   end
 
-  def departure_train(type)
-    @trains.delete(type)
+  def departure_train(train)
+    @trains.delete(train)
   end
 
   def list
-    @trains.each_with_index {|type, index| puts "#{index + 1}. #{type}"}
+    @trains
   end
 
   def list_by_type(type)

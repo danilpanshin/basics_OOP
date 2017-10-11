@@ -1,6 +1,6 @@
 class Route
 
-  attr_accessor :stations
+  attr_reader :stations
 
   def initialize(start, finish)
     @stations = [start, finish]
@@ -11,10 +11,10 @@ class Route
   end
 
   def list
-    @stations.each_with_index {|x, y| puts "#{y + 1}. #{x}"}
+    @stations
   end
 
-  def delete(name)
+  def delete_station(name)
     @stations.delete(name)
   end
 
@@ -29,8 +29,9 @@ class Train
     @speed  = speed
   end
 
-  def accelerate
-    @speed += 60
+  def accelerate(num)
+    @speed += num
+    puts "скорость увеличена на #{num}км/ч"
   end
 
   def current_speed
@@ -55,17 +56,17 @@ class Train
 
   def set_route(route)
 
-    @route = route
+    @route = route.stations
     @index_station = 0
-    puts "Поезд находится на станции #{@route[@index_station]}"
+    puts "Поезд находится на станции #{@route.stations[@index_station]}"
   end
 
   def forward
-    if @index_station == @route.length
+    if @index_station == @route.stations.length
       puts "Конечная станция"
     else
       @index_station += 1
-      puts "Поезд находится в #{@route[@index_station]}"
+      puts "Поезд находится в #{@route.stations[@index_station]}"
     end
   end
 
@@ -74,27 +75,27 @@ class Train
       puts "конечная станция"
     else
       @index_station -= 1
-      puts "Поезд находится в #{@route[@index_station]}"
+      puts "Поезд находится в #{@route.stations[@index_station]}"
     end
   end
 
   def current_station
-    puts "Поезд находится в #{@route[@index_station]}"
+    puts "Поезд находится в #{@route.stations[@index_station]}"
   end
 
   def previous_station
     if @index_station == 0
       puts "конечная станция"
     else
-      puts "Поезд находился в #{@route[@index_station - 1]}"
+      puts "Поезд находился в #{@route.stations[@index_station - 1]}"
     end
   end
 
   def next_station
-    if @index_station == @route.length
+    if @index_station == @route.stations.length
       puts "Конечная станция"
     else
-      puts "Поезд будет находиться в #{@route[@index_station + 1]}"
+      puts "Поезд будет находиться в #{@route.stations[@index_station + 1]}"
     end
   end
 
