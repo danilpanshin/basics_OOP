@@ -1,27 +1,26 @@
 class Route
-$arr
+
+  attr_accessor :stations
+
   def initialize(start, finish)
-    @first_station = start
-    @last_station = finish
-    $arr = [@first_station, @last_station]
+    @stations = [start, finish]
   end
 
   def add_station(name)
-    $arr.insert($arr.length - 1, name)
+    @stations.insert(@stations.length - 1, name)
   end
 
   def list
-    puts "#{$arr.each_with_index {|x,y |puts "#{y+1}. #{x}"}}"
+    @stations.each_with_index {|x, y| puts "#{y + 1}. #{x}"}
   end
 
   def delete(name)
-    $arr.delete(name)
+    @stations.delete(name)
   end
+
 end
 
-class Train < Route
-
-attr_accessor :number, :type, :wagons, :speed
+class Train
 
   def initialize(number, type, wagons, speed = 0)
     @number = number
@@ -30,9 +29,8 @@ attr_accessor :number, :type, :wagons, :speed
     @speed  = speed
   end
 
-  def accelerate(num)
-    @speed += num
-    puts "скорость увеличена на #{num}км/ч"
+  def accelerate
+    @speed += 60
   end
 
   def current_speed
@@ -44,66 +42,59 @@ attr_accessor :number, :type, :wagons, :speed
   end
 
   def wagons_amount
-    wagons
+    @wagons
   end
 
   def take_wagon
-    if @speed == 0
-      @wagons += 1
-    else
-      puts "сначала нужно остановиться"
-    end
+    @wagons += 1 if @speed == 0
   end
 
   def leave_wagon
-    if @speed == 0
-      @wagons -= 1
-    else
-      puts "сначала нужно остановиться"
-    end
+    @wagons -= 1 if @speed == 0 && @wagons > 0
   end
 
-  def list
-    puts "Маршрут поезда:"
-    super
-    @i = 0
-    puts "Поезд находится в #{$arr[@i]}"
+  def set_route(route)
+
+    @route = route
+    @index_station = 0
+    puts "Поезд находится на станции #{@route[@index_station]}"
   end
 
   def forward
-    if @i == $arr.length
+    if @index_station == @route.length
       puts "Конечная станция"
     else
-      @i += 1
-      puts "Поезд находится в #{$arr[@i]}"
+      @index_station += 1
+      puts "Поезд находится в #{@route[@index_station]}"
     end
   end
 
   def back
-    if @i == 0
+    if @index_station == 0
       puts "конечная станция"
     else
-      @i -= 1
-      puts "Поезд находится в #{$arr[@i]}"
+      @index_station -= 1
+      puts "Поезд находится в #{@route[@index_station]}"
     end
   end
 
   def current_station
-    puts "Поезд находится в #{$arr[@i]}"
+    puts "Поезд находится в #{@route[@index_station]}"
   end
 
   def previous_station
-    if @i == 0
+    if @index_station == 0
       puts "конечная станция"
     else
-      puts "Поезд находился в #{$arr[@i - 1]}"
+      puts "Поезд находился в #{@route[@index_station - 1]}"
     end
   end
+
   def next_station
-    if @i == $arr.length
+    if @index_station == @route.length
       puts "Конечная станция"
     else
-    puts "Поезд будет находиться в #{$arr[@i + 1]}"
+      puts "Поезд будет находиться в #{@route[@index_station + 1]}"
     end
   end
 

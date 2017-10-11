@@ -1,34 +1,26 @@
 class Station
 
-  attr_accessor :number_of_trains, :station_name, :number_cargo, :number_of_pass
-
   def initialize(name)
     @station_name = name
-    @number_of_trains = 0
-    @number_of_pass = 0
-    @number_cargo = 0
+    @trains = []
   end
 
   def arrival_train(type)
-    @number_of_trains += 1
-    if type == "cargo"
-      @number_cargo += 1
-    elsif type == "passanger"
-      @number_of_pass += 1
-    end
+    @trains << type
   end
 
   def departure_train(type)
-    @number_of_trains -= 1
-    if type == "cargo"
-      @number_cargo -= 1
-    elsif type == "passanger"
-      @number_of_pass -= 1
-    end
+    @trains.delete(type)
   end
 
   def list
-    puts "На станции #{station_name} находится всего #{number_of_trains} поездов. Их них #{number_cargo} грузовых и #{number_of_pass} пассажирских"
+    @trains.each_with_index {|type, index| puts "#{index + 1}. #{type}"}
+  end
+
+  def list_by_type(type)
+    num = 0
+    @trains.each {|traintype| num += 1 if traintype == type}
+    puts "На станции #{num} поездов типа: #{type}"
   end
 
 end
