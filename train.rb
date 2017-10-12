@@ -30,8 +30,8 @@ class Route
     @stations = [start, finish]
   end
 
-  def add_station(name)
-    @stations.insert(@stations.length - 1, name)
+  def add_station(station)
+    @stations.insert(@stations.length - 1, station)
   end
 
   def delete_station(station)
@@ -69,6 +69,7 @@ class Train
 
   def set_route(route)
     @route = route
+    @index_station = 0
     current_station.arrival_train(self)
   end
 
